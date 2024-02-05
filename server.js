@@ -33,13 +33,15 @@ if (process.env.NODE_ENV !== 'production') {
     app.use(morgan('dev'));
 }
 
-const allowlist = ['https://jobify-37q4.onrender.com']
+const allowlist = ['https://jobify-37q4.onrender.com', 'http://localhost:3000']
 const corsOptionsDelegate = function (req, callback) {
     var corsOptions;
-    if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    let originIndexInAllowList = allowlist.indexOf(req.header('Origin'));
+    console.log('Origin Index in Allow List:', originIndexInAllowList);
+    if (originIndexInAllowList !== -1) {
         corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
     } else {
-        corsOptions = { origin: false } // disable CORS for this request
+        corsOptions = { origin: true } // disable CORS for this request
     }
     callback(null, corsOptions) // callback expects two parameters: error and options
 }
