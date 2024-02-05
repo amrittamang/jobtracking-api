@@ -5962,7 +5962,7 @@ const logoutUser = async () => {
 - Add cors package and allow client url
 
 ```js
-const allowlist = ["https://jobify-37q4.onrender.com"];
+const allowlist = ["https://jobify-37q4.onrender.com", "http://localhost:3000"];
 const corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header("Origin")) !== -1) {
