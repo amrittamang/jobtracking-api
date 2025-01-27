@@ -14,7 +14,7 @@ import xss from "xss-clean";
 import mongoSanitize from "express-mongo-sanitize";
 import cookieParser from "cookie-parser";
 
-import cors from 'cors';
+import cors from "cors";
 
 //hello
 // db
@@ -29,22 +29,22 @@ import notFoundMiddleware from "./middleware/notFound.js";
 import authenticateUser from "./middleware/authenticateUser.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 
-if (process.env.NODE_ENV !== 'production') {
-    app.use(morgan('dev'));
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
 }
 
-const allowlist = ['https://jobify-37q4.onrender.com', 'http://localhost:3000']
+const allowlist = ["https://jobify-37q4.onrender.com", "http://localhost:3000"];
 const corsOptionsDelegate = function (req, callback) {
-    var corsOptions;
-    let originIndexInAllowList = allowlist.indexOf(req.header('Origin'));
-    console.log('Origin Index in Allow List:', originIndexInAllowList);
-    if (originIndexInAllowList !== -1) {
-        corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-    } else {
-        corsOptions = { origin: true } // disable CORS for this request
-    }
-    callback(null, corsOptions) // callback expects two parameters: error and options
-}
+  var corsOptions;
+  let originIndexInAllowList = allowlist.indexOf(req.header("Origin"));
+  console.log("Origin Index in Allow List:", originIndexInAllowList);
+  if (originIndexInAllowList !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: true }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
 
 app.use(cors(corsOptionsDelegate));
 app.use(express.json());
@@ -59,17 +59,17 @@ app.use("/api/v1/jobs", authenticateUser, jobsRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 const start = async () => {
-    try {
-        await connectDB(process.env.MONGO_URL);
-        app.listen(port, () => {
-            console.log(`Server is listening on port ${port}`);
-        });
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    await connectDB(process.env.MONGO_URL);
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 start();
